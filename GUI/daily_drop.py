@@ -4,7 +4,7 @@ import tkinter as tk
 from tkinter import ttk
 
 from GUI.base_tab import BaseTab
-from Helpers.helpers import convert_value, format_value
+from Helpers.helpers import convert_value, convert_number, format_value, get_color
 
 
 class DayDropTab(BaseTab):
@@ -92,6 +92,15 @@ class DayDropTab(BaseTab):
     def create_table_view(self):
         table_container = ttk.Frame(self.frame)
         table_container.grid(row=2, column=0, sticky='nsew')
+        earned_alz_frame = ttk.Frame(self.frame)
+        earned_alz_frame.grid(row=3, column=0, sticky='e', padx=10, pady=10)
+
+        earned_alz_label = tk.Label(earned_alz_frame, text="Earned Alz:", font=('Helvetica', 12), anchor='e',
+                                    fg='black')
+        earned_alz_label.grid(row=0, column=0, padx=(0, 5))
+
+        self.earned_alz_entry = tk.Entry(earned_alz_frame, font=('Helvetica', 12), state='readonly', justify='right')
+        self.earned_alz_entry.grid(row=0, column=1, sticky='e')
         self.table_container = table_container
         self.create_initial_tables()
         self.update_item_dropdown()
@@ -130,6 +139,26 @@ class DayDropTab(BaseTab):
 
         self.table_container.grid_rowconfigure(0, weight=1)
         self.table_container.grid_columnconfigure(0, weight=1)
+
+    def update_earned_alz(self):
+        total_value = 0
+        for tree in self.trees.values():
+            for child in tree.get_children():
+                item = tree.item(child)
+                value_str = str(item['values'][1])
+                value = convert_value(value_str)
+                print(item['values'][2])
+                quantity = int(item['values'][2])
+                total_value += value * quantity
+
+        formatted_value = convert_number(total_value)
+        color = get_color(total_value)
+
+        # Ustawienie wartości w zablokowanym polu tekstowym
+        self.earned_alz_entry.config(state='normal')
+        self.earned_alz_entry.delete(0, tk.END)
+        self.earned_alz_entry.insert(0, formatted_value)
+        self.earned_alz_entry.config(state='readonly', fg=color)
 
     # ==============================================================================================================
     # ========================================   GRID CONFIGURATION   ==============================================
@@ -253,6 +282,9 @@ class DayDropTab(BaseTab):
             for row in tree.get_children():
                 tree.delete(row)
 
+        # Aktualizacja wartości zarobionych Alz
+        self.update_earned_alz()
+
     def on_tree_enter(self, event):
         tree = event.widget
         item = tree.identify_row(event.y)
@@ -284,6 +316,7 @@ class DayDropTab(BaseTab):
             quantity = int(quantity)
             self.db.add_item(item_name, float(item_value), 1, self.last_dungeon.get())
             tree.item(item, values=(item_name, item_value, str(quantity + 1)))
+            self.update_earned_alz()
         except tk.TclError:
             pass
 
@@ -298,5 +331,6 @@ class DayDropTab(BaseTab):
             else:
                 self.db.remove_item(item_name, self.last_dungeon.get())
                 tree.delete(item)
+            self.update_earned_alz()
         except tk.TclError:
             pass
