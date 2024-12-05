@@ -11,6 +11,17 @@ def convert_value(value):
     return int(value)
 
 
+def convert_number(number):
+    if number >= 1_000_000_000:
+        return f'{number / 1_000_000_000:.2f}b'
+    elif number >= 1_000_000:
+        return f'{number / 1_000_000:.2f}m'
+    elif number >= 1_000:
+        return f'{number / 1_000:.2f}k'
+    else:
+        return str(number)
+
+
 def format_value(value):
     if value >= 1_000_000_000:
         formatted_value = value / 1_000_000_000
@@ -23,3 +34,15 @@ def format_value(value):
         return f"{formatted_value:.1f}".rstrip('0').rstrip('.') + 'k'
     return str(value)
 
+
+def get_color(value):
+    if value >= 1_000_000_000:
+        return 'lightblue'
+    elif value >= 100_000_000:
+        return 'orange'
+    elif value >= 10_000_000:
+        return 'green'
+    elif value >= 1_000_000:
+        return 'lightblue'
+    else:
+        return 'yellow'
