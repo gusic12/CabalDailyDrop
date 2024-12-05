@@ -4,6 +4,7 @@ import tkinter as tk
 from tkinter import ttk
 
 from GUI.base_tab import BaseTab
+from Helpers.helpers import convert_value, format_value
 
 
 class DayDropTab(BaseTab):
@@ -154,27 +155,27 @@ class DayDropTab(BaseTab):
                     last_value = self.db.get_last_item_value(item_name, dungeon)
 
                     if last_value > 0:
-                        self.entry_item_value.insert(0, str(last_value))
+                        self.entry_item_value.insert(0, format_value(last_value))
                     else:
-                        self.entry_item_value.insert(0, str(min_value))
+                        self.entry_item_value.insert(0, format_value(min_value))
 
                     self.entry_item_value.config(state=tk.NORMAL)
                     self.entry_item_value.bind("<FocusOut>", lambda e: self.check_range_value(min_value, max_value))
                     self.entry_item_value.bind("<Enter>", lambda e: self.show_tooltip(e, min_value, max_value))
                     self.entry_item_value.bind("<Leave>", self.hide_tooltip)
                 else:
-                    self.entry_item_value.insert(0, str(item_data))
+                    self.entry_item_value.insert(0, format_value(item_data))
                     self.entry_item_value.config(state='readonly')
 
     def check_range_value(self, min_value, max_value):
         try:
-            value = int(self.entry_item_value.get())
+            value = convert_value(self.entry_item_value.get())
             if value < min_value or value > max_value:
                 self.entry_item_value.delete(0, tk.END)
-                self.entry_item_value.insert(0, str(min_value))
+                self.entry_item_value.insert(0, format_value(min_value))
         except ValueError:
             self.entry_item_value.delete(0, tk.END)
-            self.entry_item_value.insert(0, str(min_value))
+            self.entry_item_value.insert(0, format_value(min_value))
 
     def show_tooltip(self, event, min_value, max_value):
         tooltip_text = f"Allowed range: {min_value} - {max_value}"
@@ -206,11 +207,13 @@ class DayDropTab(BaseTab):
         dungeon = self.last_dungeon.get()
         item_value = self.db.get_item_value(dungeon, item_name)
         if isinstance(item_value, dict):
-            item_value = int(self.entry_item_value.get())
+            item_value = convert_value(self.entry_item_value.get())
+        else:
+            item_value = convert_value(self.entry_item_value.get())
+
         quantity = int(self.entry_quantity.get())
 
         self.db.add_item(item_name, item_value, quantity, dungeon)
-
         self.load_drops(dungeon)
 
     def create_initial_tables(self):
@@ -221,7 +224,7 @@ class DayDropTab(BaseTab):
                     'SELECT item_name, item_value, quantity FROM drops WHERE dungeon = ? AND strftime("%s", "now") - strftime("%s", drop_date) <= 86400',
                     (dungeon,)):
                 item_name, item_value, quantity = row
-                item_value = int(item_value)  # Convert to int
+                item_value = int(item_value)
                 self.trees[dungeon].insert("", "end", values=(item_name, item_value, quantity))
             if i == 0:
                 self.last_dungeon.set(dungeon)
@@ -243,7 +246,7 @@ class DayDropTab(BaseTab):
         results = self.db.cursor.fetchall()
 
         for item_name, item_value, quantity in results:
-            item_value = int(item_value)  # Convert to int
+            item_value = int(item_value)
             tree.insert("", "end", values=(item_name, item_value, quantity))
 
         if current_time >= today_22:
@@ -278,7 +281,7 @@ class DayDropTab(BaseTab):
         try:
             item_data = tree.item(item, "values")
             item_name, item_value, quantity = item_data
-            quantity = int(quantity)  # Upewnij się, że ilość jest liczbą całkowitą
+            quantity = int(quantity)
             self.db.add_item(item_name, float(item_value), 1, self.last_dungeon.get())
             tree.item(item, values=(item_name, item_value, str(quantity + 1)))
         except tk.TclError:
