@@ -1,0 +1,84 @@
+{
+  "Lake In Dust": {
+    "fixed_prices": {
+      "CARD - Zigdris Faello": 500000,
+      "Faded Red Jewel": 3000000,
+      "DP": 320000
+    },
+    "range_prices": {
+      "Upgrade Core(L)": {
+        "min_value": 1000,
+        "max_value": 2000
+      },
+      "Upgrade Core(M)": {
+        "min_value": 500,
+        "max_value": 1500
+      },
+      "Force Core(L)": {
+        "min_value": 250,
+        "max_value": 750
+      },
+      "Force Core(Piece)": {
+        "min_value": 100,
+        "max_value": 300
+      },
+      "Upgrade Core(Piece)": {
+        "min_value": 50,
+        "max_value": 150
+      },
+      "Bike - Blue": {
+        "min_value": 10000,
+        "max_value": 20000
+      },
+      "Armor Scroll(L) - Magic Skill Amp.": {
+        "min_value": 5000,
+        "max_value": 10000
+      },
+      "Armor Scroll(L) - Sword Skill Amp.": {
+        "min_value": 5000,
+        "max_value": 10000
+      }
+    }
+  },
+  "Volcanic Citadel": {
+    "fixed_prices": {
+      "CARD - Balrog": 500000,
+      "Faded Orange Jewel": 3000000,
+      "DP": 320000
+    },
+    "range_prices": {
+      "Upgrade Core(L)": {
+        "min_value": 1000,
+        "max_value": 2000
+      },
+      "Upgrade Core(M)": {
+        "min_value": 500,
+        "max_value": 1500
+      },
+      "Force Core(L)": {
+        "min_value": 250,
+        "max_value": 750
+      },
+      "Force Core(Piece)": {
+        "min_value": 100,
+        "max_value": 300
+      },
+      "Upgrade Core(Piece)": {
+        "min_value": 50,
+        "max_value": 150
+      },
+      "Bike - Blue": {
+        "min_value": 10000,
+        "max_value": 20000
+      },
+      "Armor Scroll(L) - Magic Skill Amp.": {
+        "min_value": 5000,
+        "max_value": 10000
+      },
+      "Armor Scroll(L) - Sword Skill Amp.": {
+        "min_value": 5000,
+        "max_value": 10000
+      }
+    }
+  }
+}
