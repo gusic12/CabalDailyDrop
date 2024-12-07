@@ -284,7 +284,6 @@ class DayDropTab(BaseTab):
             for row in tree.get_children():
                 tree.delete(row)
 
-        # Aktualizacja wartości zarobionych Alz
         self.update_earned_alz()
 
     def on_tree_enter(self, event):
