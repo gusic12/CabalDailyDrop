@@ -9,7 +9,7 @@ from GUI.dungeon_drop import DungeonDropTab
 class GUI:
     def __init__(self, root):
         self.root = root
-        self.root.title("Cabal Online Drop Tracker")
+        self.root.title("Cabal Essential")
 
         self.db = Database()
 
@@ -29,12 +29,12 @@ class GUI:
         self.day_tab = DayDropTab(self.tabControl, self.db)
         self.dungeon_tab = DungeonDropTab(self.tabControl, self.db)
 
-        self.tabControl.add(self.day_tab.frame, text='Dzienny Drop')
+        self.tabControl.add(self.day_tab.frame, text='Daily Drop')
         self.tabControl.add(self.dungeon_tab.frame, text='Dungeon Drop')
 
     def clear_database(self):
         self.db.clear_database()
-        messagebox.showinfo("Informacja", "Baza danych została wyczyszczona.")
+        messagebox.showinfo("Info", "Data Base has been deleted.")
         self.day_tab.refresh_tree()
         self.dungeon_tab.refresh_tree()
 

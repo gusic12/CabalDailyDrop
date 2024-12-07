@@ -99,8 +99,11 @@ class DayDropTab(BaseTab):
                                     fg='black')
         earned_alz_label.grid(row=0, column=0, padx=(0, 5))
 
-        self.earned_alz_entry = tk.Entry(earned_alz_frame, font=('Helvetica', 12), state='readonly', justify='right')
+        self.earned_alz_entry = tk.Entry(earned_alz_frame, font=('Helvetica', 10, 'bold'), justify='right', width=15,
+                                         fg='white')
         self.earned_alz_entry.grid(row=0, column=1, sticky='e')
+        self.earned_alz_entry.configure(readonlybackground='black')
+        self.earned_alz_entry.config(state='readonly')
         self.table_container = table_container
         self.create_initial_tables()
         self.update_item_dropdown()
@@ -154,7 +157,6 @@ class DayDropTab(BaseTab):
         formatted_value = convert_number(total_value)
         color = get_color(total_value)
 
-        # Ustawienie wartości w zablokowanym polu tekstowym
         self.earned_alz_entry.config(state='normal')
         self.earned_alz_entry.delete(0, tk.END)
         self.earned_alz_entry.insert(0, formatted_value)
@@ -213,7 +215,7 @@ class DayDropTab(BaseTab):
         self.tooltip = tk.Toplevel(self.frame)
         self.tooltip.wm_overrideredirect(True)
         self.tooltip.wm_geometry(f"+{x}+{y}")
-        label = tk.Label(self.tooltip, text=tooltip_text, background="yellow", relief="solid", borderwidth=1)
+        label = tk.Label(self.tooltip, text=tooltip_text, background="white", relief="solid", borderwidth=1)
         label.pack()
 
     def hide_tooltip(self, event):

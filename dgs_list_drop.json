@@ -37,6 +37,10 @@
       "Armor Scroll(L) - Sword Skill Amp.": {
         "min_value": 1500000,
         "max_value": 5000000
+      },
+      "Armor Scroll(L) - Critical Rate": {
+        "min_value": 1500000,
+        "max_value": 5000000
       }
     }
   },
