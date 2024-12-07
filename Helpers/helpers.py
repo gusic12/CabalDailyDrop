@@ -13,13 +13,17 @@ def convert_value(value):
 
 def convert_number(number):
     if number >= 1_000_000_000:
-        return f'{number / 1_000_000_000:.2f}b'
+        formatted_number = number / 1_000_000_000
+        return f'{formatted_number:.2f}b' if formatted_number % 1 != 0 else f'{int(formatted_number)}b'
     elif number >= 1_000_000:
-        return f'{number / 1_000_000:.2f}m'
+        formatted_number = number / 1_000_000
+        return f'{formatted_number:.2f}m' if formatted_number % 1 != 0 else f'{int(formatted_number)}m'
     elif number >= 1_000:
-        return f'{number / 1_000:.2f}k'
+        formatted_number = number / 1_000
+        return f'{formatted_number:.2f}k' if formatted_number % 1 != 0 else f'{int(formatted_number)}k'
     else:
-        return str(number)
+        return str(int(number)) if number % 1 == 0 else str(number)
+
 
 
 def format_value(value):
